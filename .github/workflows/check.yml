@@ -1,0 +1,78 @@
+name: termin-check
+
+on:
+  push: {}
+  schedule:
+    - cron: "1-59/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        environment:
+          - en-cron
+          - fr-cron
+
+    environment: ${{ matrix.environment }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: |
+          npm ci
+
+      - name: Install Chromium
+        run: |
+          npx playwright install chromium
+
+      - name: Run termin checker
+        env:
+          ETERM_URL: ${{ secrets.ETERM_URL }}
+          PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
+          PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
+          HEADLESS: "true"
+        run: node check.js
+
+      - name: Commit store.json back to repo (if changed)
+        if: always()
+        run: |
+          pwd
+          ls
+          git config user.name "github-actions[bot]"
+          git config user.email "3110649+Lanuitjedanse@users.noreply.github.com"
+          if [ -f store.json ]; then
+            git add store.json -f
+            if git diff --staged --quiet; then
+              echo "No changes to commit"
+            else
+              git commit -m "Update store.json [skip ci]" || true
+              git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
+            fi
+          else
+            echo "store.json not found, skipping commit"
+          fi
+
+      - name: Cache npm and Playwright
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ~/node_modules
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-

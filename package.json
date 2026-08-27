@@ -1,0 +1,17 @@
+{
+  "name": "termin-checker",
+  "version": "0.1.0",
+  "description": "Minimal eTerminservice checker with Pushover notifications",
+  "main": "check.js",
+  "scripts": {
+    "check": "node check.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "node-fetch": "2.6.7",
+    "playwright": "^1.39.0",
+    "playwright-core": "^1.39.0"
+  }
+}

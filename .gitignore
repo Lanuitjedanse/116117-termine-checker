@@ -1,0 +1,27 @@
+# Node
+node_modules/
+**/node_modules/
+npm-debug.log*
+yarn-error.log
+
+# Environment
+.env
+*.env
+
+# Logs
+logs/
+*.log
+
+# Playwright local browsers/cache
+.playwright/
+playwright/.local-browsers/
+
+# Local store
+store.json
+
+# OS files
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
