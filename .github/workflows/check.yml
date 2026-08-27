@@ -4,6 +4,7 @@ on:
   push: {}
   schedule:
     - cron: "*/5 6-23 * * *"
+      timezone: "Europe/Berlin"
   workflow_dispatch:
 
 permissions:
