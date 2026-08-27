@@ -3,7 +3,7 @@ name: termin-check
 on:
   push: {}
   schedule:
-    - cron: "1-59/5 * * * *"
+    - cron: "*/5 6-23 * * *"
   workflow_dispatch:
 
 permissions:
