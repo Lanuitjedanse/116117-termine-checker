@@ -11,6 +11,11 @@ permissions:
   contents: write
 
 jobs:
+  schedule-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test scheduled trigger
+        run: echo "SCHEDULE TRIGGERED"
   check:
     runs-on: ubuntu-latest
 
