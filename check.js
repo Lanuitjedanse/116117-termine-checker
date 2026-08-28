@@ -137,7 +137,7 @@ async function run() {
   const headless = process.env.HEADLESS !== "false";
   const slowMo = parseInt(process.env.PLAYWRIGHT_SLOWMO || "0", 10) || 0;
   const launchOptions = {
-    headless: false,
+    headless,
     slowMo,
     args: ["--no-sandbox", "--disable-blink-features=AutomationControlled"],
   };
