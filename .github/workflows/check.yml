@@ -3,7 +3,7 @@ name: termin-check
 on:
   push: {}
   schedule:
-    - cron: "*/5 6-23 * * *"
+    - cron: "3,14,23,37,46,54 6-23 * * *"
       timezone: "Europe/Berlin"
   workflow_dispatch:
 
