@@ -65,6 +65,14 @@ function escapeRegex(string) {
 }
 
 async function getRelevantAppointments(page) {
+  const moreAppointmentsBtn = page.locator(
+    ".wp2-terminsuche__more-termine-button",
+  );
+
+  if (await moreAppointmentsBtn.isVisible()) {
+    await moreAppointmentsBtn.click();
+  }
+
   const appointmentCards = page.locator(".wp2-terminprofile__container");
 
   const count = await appointmentCards.count();
