@@ -73,7 +73,7 @@ async function getRelevantAppointments(page) {
     await moreAppointmentsBtn.click();
   }
 
-  const appointmentCards = page.locator(".wp2-terminprofile__container");
+  const appointmentCards = page.locator(".wp2-terminsuche__terminprofil");
 
   const count = await appointmentCards.count();
 
@@ -81,7 +81,7 @@ async function getRelevantAppointments(page) {
 
   if (count) {
     for (let i = 0; i < count; i++) {
-      const card = page.locator(`#wp2-terminprofil-${i}`);
+      const card = appointmentCards.nth(i);
 
       const title = await card
         .locator(".wp2-terminprofil-info__anzeigename")
@@ -137,7 +137,7 @@ async function run() {
   const headless = process.env.HEADLESS !== "false";
   const slowMo = parseInt(process.env.PLAYWRIGHT_SLOWMO || "0", 10) || 0;
   const launchOptions = {
-    headless,
+    headless: false,
     slowMo,
     args: ["--no-sandbox", "--disable-blink-features=AutomationControlled"],
   };
