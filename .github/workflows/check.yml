@@ -16,6 +16,7 @@ jobs:
         environment:
           - en-cron
           - fr-cron
+          - de-cron
 
     environment: ${{ matrix.environment }}
 
